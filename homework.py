@@ -68,7 +68,7 @@ class Running(Training):
         super().__init__(action, duration, weight)
 
     def get_spent_calories(self) -> float:
-        return ((self.CALORIES_MEAN_SPEED_MULTIPLIER 
+        return ((self.CALORIES_MEAN_SPEED_MULTIPLIER
                 * self.get_mean_speed()
                 + self.CALORIES_MEAN_SPEED_SHIFT)
                 * self.weight / self.M_IN_KM * self.duration * 60)
@@ -88,19 +88,19 @@ class SportsWalking(Training):
                  weight: float,
                  height: float,
                  ) -> None:
-    
+
         super().__init__(action, duration, weight)
         self.height = height
 
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         return ((self.CALORIES_WEIGHT_MULTIPLIER
-                 * self.weight
-                 + ((self.get_mean_speed() * self.KMH_IN_MSEC) ** 2
-                 / (self.height / self.CM_IN_M))
-                 * self.CALORIES_SPEED_HEIGHT_MULTIPLIER
-                 * self.weight)
-                 * (self.duration * self.MIN_IN_H))
+                * self.weight
+                + ((self.get_mean_speed() * self.KMH_IN_MSEC) ** 2
+                / (self.height / self.CM_IN_M))
+                * self.CALORIES_SPEED_HEIGHT_MULTIPLIER
+                * self.weight)
+                * (self.duration * self.MIN_IN_H))
 
 
 class Swimming(Training):
@@ -116,7 +116,7 @@ class Swimming(Training):
                  length_pool: float,
                  count_pool: float
                  ) -> None:
-    
+
         super().__init__(action, duration, weight)
 
         self.length_pool = length_pool
@@ -135,10 +135,10 @@ class Swimming(Training):
 def read_package(workout_type: str, data: list) -> Training:
     """Прочитать данные полученные от датчиков."""
     workout_types: dict[str, Training] = {
-        'SWM': Swimming, 
-        'RUN': Running, 
+        'SWM': Swimming,
+        'RUN': Running,
         'WLK': SportsWalking
-        }
+    }
 
     if workout_type in workout_types:
         return workout_types[workout_type](*data)
